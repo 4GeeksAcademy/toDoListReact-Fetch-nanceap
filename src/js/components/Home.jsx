@@ -2,14 +2,12 @@ import React from "react";
 import List from "./List";
 
 const Home = () => {
-  return (
-    <div className="container">
-      <List />
-    </div>
-  );
+  return <List />;
 };
 
 export default Home;
+
+
 
 
 

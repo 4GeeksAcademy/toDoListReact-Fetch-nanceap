@@ -11,9 +11,10 @@ const List = () => {
     fetch(`${apiBaseUrl}/users/${username}`)
       .then((res) => {
         if (res.status === 404) {
+  
           return fetch(`${apiBaseUrl}/users/${username}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
           });
         }
         return res;
@@ -31,13 +32,13 @@ const List = () => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       const newTask = {
         label: inputValue,
-        done: false
+        done: false,
       };
 
       fetch(`${apiBaseUrl}/todos/${username}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTask)
+        body: JSON.stringify(newTask),
       }).then(() => {
         setInputValue("");
         getTasks();
@@ -46,19 +47,21 @@ const List = () => {
   };
 
   const handleDelete = (taskId) => {
-    fetch(`${apiBaseUrl}/todos/${username}/${taskId}`, {
-      method: "DELETE"
+    if (!taskId) return;
+
+    fetch(`${apiBaseUrl}/todos/${taskId}`, {
+      method: "DELETE",
     }).then(() => getTasks());
   };
 
   const handleDeleteAll = () => {
     fetch(`${apiBaseUrl}/users/${username}`, {
-      method: "DELETE"
+      method: "DELETE",
     }).then(() => {
       setTasks([]);
       fetch(`${apiBaseUrl}/users/${username}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       }).then(() => getTasks());
     });
   };
@@ -66,6 +69,7 @@ const List = () => {
   return (
     <div className="todo-container">
       <h1 className="text-center my-4">TODO List</h1>
+
       <input
         type="text"
         className="form-control"
@@ -110,6 +114,14 @@ const List = () => {
 };
 
 export default List;
+
+
+
+
+
+
+
+
 
 
 
